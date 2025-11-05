@@ -71,6 +71,13 @@ exports.getBooking = async (req, res, next) => {
             return res.status(404).json({ success: false, msg: `Booking not found with id of ${req.params.id}` });
         }
 
+        if (booking.user.toString() !== req.user.id && req.user.role !== 'ADMIN') {
+            return res.status(401).json({ 
+                success: false, 
+                msg: `User ${req.user.id} is not authorized to update this booking`
+            });
+        }
+
         res.status(200).json({
             success: true,
             data: booking
@@ -92,6 +99,13 @@ exports.updateBooking = async (req, res, next) => {
 
         if (!booking) 
             return res.status(404).json({ success: false, msg: `The booking id ${req.params.id} is not found`});
+
+        if (booking.user.toString() !== req.user.id && req.user.role !== 'ADMIN') {
+            return res.status(401).json({ 
+                success: false, 
+                msg: `User ${req.user.id} is not authorized to update this booking`
+            });
+        }
 
         const updates = {
             date: req.body.date,
@@ -121,6 +135,13 @@ exports.deleteBooking = async (req, res, next) => {
 
         if (!booking) 
             return res.status(404).json({ success: false, msg: `Booking id ${req.params.id} is not found`});
+
+        if (booking.user.toString() !== req.user.id && req.user.role !== 'ADMIN') {
+            return res.status(401).json({ 
+                success: false, 
+                msg: `User ${req.user.id} is not authorized to update this booking`
+            });
+        }
 
         await Booking.findByIdAndDelete(req.params.id);
 
