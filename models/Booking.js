@@ -12,7 +12,7 @@ const BookingSchema = new mongoose.Schema({
     },
     car: {
         type: mongoose.Schema.ObjectId,
-        ref: 'Car',
+        ref: 'Cars',
         required: [true, 'A booking must be for a car']
     }
 }, {
