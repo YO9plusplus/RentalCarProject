@@ -3,9 +3,9 @@ const router = express.Router();
 
 const {getAllRentalCars,craeteRentalCar,deleteRentalCar,updateRentalCar} = require('../controllers/RentalCar')
 
-const app = express()
+const { protect, authorize } = require("../middleware/auth");
 
-router.route('/').get(getAllRentalCars).post(craeteRentalCar)
-router.route('/id').delete(deleteRentalCar).put(updateRentalCar)
+router.route('/').get(protect, getAllRentalCars).post(protect, authorize('ADMIN'),craeteRentalCar)
+router.route('/id').delete(protect, authorize('ADMIN'),deleteRentalCar).put(protect, authorize('ADMIN'),updateRentalCar)
 
 module.exports=router;
