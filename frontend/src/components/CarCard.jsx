@@ -6,10 +6,10 @@ export default function CarCard({ car,children}) {
     <div className="border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300 bg-white">
       
       {/* 1. Image (This is the only line that changes) */}
-      <div className="aspect-[16/9]">
+      <div className="aspect-video">
         <img
           className="object-cover w-full h-full"
-          src={imageUrl || 'https://placehold.co/600x400/000000/FFFFFF?text=Car'}
+          src={imageUrl || `https://placehold.co/600x400/000000/FFFFFF?text=${type}`}
           alt={`${brand} ${model}`}
         />
       </div>

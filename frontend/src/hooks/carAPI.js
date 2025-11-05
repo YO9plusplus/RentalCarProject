@@ -7,8 +7,16 @@ const API_URL = 'http://localhost:3000/api/v1/cars';
  * Fetches all cars. This is public, no token needed.
  */
 export const fetchAllCars = async () => {
-  const response = await axios.get(API_URL);
-  return response.data; // { success, count, data }
+  const token = localStorage.getItem('token');
+
+  const config = {
+    headers: {
+        'Authorization' : `Bearer ${token}`
+    }
+  };
+
+  const response = await axios.get(API_URL, config);
+  return response.data;
 };
 
 /**

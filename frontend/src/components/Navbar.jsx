@@ -10,7 +10,16 @@ export default function Navbar() {
     navigate('/login');
   }
 
-  const navItemClasses = "inline-flex items-center px-1 pt-1 text-sm font-bold tracking-wide border-b-2 transition-colors duration-300 ease-in-out";
+  const navItemClasses = `
+    relative inline-flex items-center px-1 pt-1 text-sm font-bold tracking-wide 
+    transition-colors duration-300 ease-in-out
+    after:content-[''] 
+    after:absolute after:bottom-0 after:left-0 
+    after:h-[2px] after:w-full 
+    after:bg-black 
+    after:scale-x-0 after:origin-left 
+    after:transition-transform after:duration-300 after:ease-in-out
+  `;
   
   return (
     <nav className="bg-white border-b border-gray-200">
@@ -32,8 +41,8 @@ export default function Navbar() {
               className={({ isActive }) =>
                 `${navItemClasses} ${
                   isActive
-                    ? 'text-black border-black'
-                    : 'text-gray-600 border-transparent hover:text-black hover:border-black'
+                    ? 'text-black after:scale-x-100' // Active state
+                    : 'text-gray-600 hover:text-black hover:after:scale-x-100' // Inactive state
                 }`
               }
             >
@@ -44,8 +53,8 @@ export default function Navbar() {
               className={({ isActive }) =>
                 `${navItemClasses} ${
                   isActive
-                    ? 'text-black border-black'
-                    : 'text-gray-600 border-transparent hover:text-black hover:border-black'
+                    ? 'text-black after:scale-x-100' // Active state
+                    : 'text-gray-600 hover:text-black hover:after:scale-x-100' // Inactive state
                 }`
               }
             >

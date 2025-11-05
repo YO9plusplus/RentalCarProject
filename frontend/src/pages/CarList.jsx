@@ -18,7 +18,6 @@ export default function CarListPage() {
       try {
         setLoading(true);
         const response = await fetchAllCars();
-
         setCars(response.data)
         setError(null)
       }
@@ -34,8 +33,8 @@ export default function CarListPage() {
   },[]);
   const handleOnClick = (carId) => {
     // Find the car from either the main list or suggestions
-    const carToBook = cars.find((car) => car.id == carId) || 
-                      suggestions.find((car) => car.id == carId);
+    const carToBook = cars.find((car) => car._id == carId) || 
+                      suggestions.find((car) => car._id == carId);
 
     if (carToBook) {
       setSelectedCar(carToBook);
@@ -53,8 +52,8 @@ export default function CarListPage() {
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedCar(null);
-    setSuggestions([]);
-    setRememberedDate(''); 
+    // setSuggestions([]);
+    // setRememberedDate(''); 
   };
   
   if (loading) {
@@ -90,18 +89,18 @@ export default function CarListPage() {
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {suggestions.length > 0 && (
-          <div className="mb-12 p-6 bg-blue-50 border-2 border-blue-200 rounded-lg">
+          <div className="mb-12 p-6 bg-blue-50 border-2 border-blue-200 shadow-xl rounded-lg">
             <h2 className="text-2xl font-bold text-blue-900 mb-4">
               That car is unavailable. How about one of these?
             </h2>
             <div className="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3">
               {suggestions.map((car) => (
                 <CarCard 
-                  key={car.id} 
+                  key={car._id} 
                   car={car}>
                   <button
-                    onClick={() => handleOnClick(car.id)} // Calls handleOnClick with _id
-                    className="w-full bg-blue-600 text-white py-3 rounded-md font-semibold hover:bg-blue-500 transition-colors duration-300"
+                    onClick={() => handleOnClick(car._id)} // Calls handleOnClick with _id
+                    className="w-full bg-black text-white py-3 rounded-md font-semibold hover:bg-gray-700 transition-colors duration-300"
                   >
                     Book This One
                   </button>
@@ -119,10 +118,10 @@ export default function CarListPage() {
         <div className="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:gap-x-8">
           {cars && cars.map((car) => (
             <CarCard
-              key={car.id} 
+              key={car._id} 
               car={car}>
               <button
-                onClick={() => handleOnClick(car.id)} // Calls handleOnClick with _id
+                onClick={() => handleOnClick(car._id)} // Calls handleOnClick with _id
                 className="w-full bg-gray-900 text-white py-3 rounded-md font-semibold hover:bg-gray-700 transition-colors duration-300"
               >
                 Book Now

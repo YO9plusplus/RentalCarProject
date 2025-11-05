@@ -20,7 +20,7 @@ exports.createBooking = async (req, res, next) => {
         if (!car) 
             return res.status(404).json({success: false, msg: `Car not found with id ${req.body.car}`});
 
-        const existingCar = await Car.findOne({
+        const existingCar = await Booking.findOne({
             car : req.body.car,
             date: new Date(req.body.date)
         })

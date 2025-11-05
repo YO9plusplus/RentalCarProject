@@ -8,7 +8,7 @@ const router = express.Router();
 router.route('/')
     .get(protect, getBookings)
     
-    router.route('/:id')
+router.route('/:id')
     .get(protect, getBooking)
     .put(protect, updateBooking)
     .delete(protect, deleteBooking)

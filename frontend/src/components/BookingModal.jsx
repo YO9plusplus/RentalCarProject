@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { createBooking } from '../hooks/bookingAPI';
 
 
-export default function BookingModal({ isOpen, onClose, car, onSuggestions,initialDate }) {
+export default function BookingModal({ isOpen, onClose, car, onSuggestions,initialDate,issuggest }) {
   const [date, setDate] = useState(initialDate || '');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -44,6 +44,7 @@ export default function BookingModal({ isOpen, onClose, car, onSuggestions,initi
       if (err.response && err.response.status === 409) {
         const message = err.response.data.message;
         const suggestions = err.response.data.suggestions;
+        issuggest = true;
         if (onSuggestions) {
           onSuggestions(suggestions,date);
         }
