@@ -1,7 +1,6 @@
 import React from 'react';
 import Navbar from '../components/Navbar';
 import CarCard from '../components/CarCard';
-import useAxios from '../hooks/useAxios';
 
 export default function CarListPage() {
   const { data: cars, loading, error } = useAxios('/cars');
