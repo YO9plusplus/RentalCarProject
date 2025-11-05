@@ -21,7 +21,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use('/api/v1/auth/', auth)
-app.use('/api/v1/rentalCars', rentalCars)
+app.use('/api/v1/cars', rentalCars)
 app.use('/api/v1/provider',provider)
 app.use('/api/v1/booking', booking);
 

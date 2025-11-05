@@ -1,8 +1,7 @@
 import React from 'react';
 
-export default function CarCard({ car }) {
+export default function CarCard({ car,children}) {
   const { brand, model, daily_rate, type, seats, imageUrl } = car;
-
   return (
     <div className="border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300 bg-white">
       
@@ -29,9 +28,9 @@ export default function CarCard({ car }) {
           <span className="font-medium">{type}</span>
           <span className="font-medium">{seats} Seats</span>
         </div>
-        <button className="mt-6 w-full bg-gray-900 text-white py-3 rounded-md font-semibold hover:bg-gray-700 transition-colors duration-300">
-          Book Now
-        </button>
+        <div className="mt-6">
+          {children}
+        </div>
       </div>
     </div>
   );
