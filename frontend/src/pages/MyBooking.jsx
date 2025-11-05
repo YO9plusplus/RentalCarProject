@@ -3,11 +3,16 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import { fetchMyBookings, deleteBooking } from '../hooks/bookingAPI'; 
 import BookingCard from "../components/BookingCard";
+import EditBooking from '../components/EditBooking';
 
 export default function MyBookingsPage() {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+//   Edit Modal State
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedBooking, setSelectedBooking] = useState(null);
 
   // Function to load the bookings
   const loadBookings = async () => {
@@ -48,6 +53,22 @@ export default function MyBookingsPage() {
     }
   };
 
+//   Modal Control Function
+  const handleEditClick = (booking) => {
+    setSelectedBooking(booking);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedBooking(null);
+  };
+
+  const handleUpdateSuccess = () => {
+    handleCloseModal();
+    loadBookings();
+  }
+
   // Helper component for rendering loading/error states
   const renderContent = () => {
     if (loading) {
@@ -78,7 +99,8 @@ export default function MyBookingsPage() {
           <BookingCard 
             key={booking._id} 
             booking={booking} 
-            onDelete={handleDelete} 
+            onDelete={handleDelete}
+            onEdit={handleEditClick}
           />
         ))}
       </div>
@@ -94,6 +116,13 @@ export default function MyBookingsPage() {
         </h1>
         {renderContent()}
       </main>
+
+      <EditBooking
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        onSuccess={handleUpdateSuccess}
+        booking={selectedBooking}
+      />
     </div>
   );
 }
