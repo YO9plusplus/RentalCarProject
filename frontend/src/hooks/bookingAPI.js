@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3000/api/v1/bookings';
+const API_URL = 'http://localhost:3000/api/v1/booking';
 
 /**
  * Helper function to get auth headers.

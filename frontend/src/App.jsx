@@ -1,12 +1,11 @@
 import React from 'react';
-// 1. Import all the routing tools
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
 
-// 2. Import your pages
 import CarListPage from './pages/CarList';
 import LoginPage from './pages/Login';
 import RegisterPage from './pages/Register';
+import MyBookingsPage from './pages/MyBooking';
 
 function App() {
   return (
@@ -21,6 +20,14 @@ function App() {
           element={
             <ProtectedRoute>
               <CarListPage />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/my-bookings" 
+          element={
+            <ProtectedRoute>
+              <MyBookingsPage />
             </ProtectedRoute>
           } 
         />
