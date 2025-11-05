@@ -20,9 +20,50 @@ exports.createBooking = async (req, res, next) => {
         if (!car) 
             return res.status(404).json({success: false, msg: `Car not found with id ${req.body.car}`});
 
-        const booking = await Booking.create(req.body);
+        const existingCar = await Car.findOne({
+            car : req.body.car,
+            date: new Date(req.body.date)
+        })
 
-        res.status(201).json({success: true, data: booking});
+        if (!existingCar){
+            const booking = await Booking.create(req.body);
+            res.status(201).json({success: true, data: booking});
+        }
+        else {
+            const bookingOndate = await Booking.find({
+                date: new Date(req.body.date)
+            }).select('car')
+
+            const unavailableCarIds = bookingOndate.map(b=> b.car.toString());
+            const availableCars = await Car.find({
+                _id: { $nin: unavailableCarIds } 
+            });
+
+            // Define the scoring function
+            const getSuggestionScore = (car, target) => {
+                let score = 0;
+                if (car.model === target.model) score += 16;
+                if (car.type === target.type) score += 8;
+                if (car.seats === target.seats) score += 4;
+                if (car.size === target.size) score += 2;
+                if (car.brand === target.brand) score += 1;
+                return score;
+            };
+
+            const suggestions = availableCars
+                .map(suggestionCar => ({
+                    car: suggestionCar,
+                    score: getSuggestionScore(suggestionCar, car)
+                }))
+                .filter(suggestion => suggestion.score > 0) 
+                .sort((a, b) => b.score - a.score);
+            
+            const finalSuggestions = suggestions.map(s => s.car);
+            return res.status(409).json({ 
+                message: 'This car is not available on the selected date.',
+                suggestions: finalSuggestions.slice(0, 3) 
+            });
+        }
     } catch(err) {
         console.log(err);
         return res.status(500).json({success: false, msg: 'Server Error'});
