@@ -7,7 +7,8 @@
     "express": "^5.1.0",
     "init": "^0.1.2",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.19.3"
+    "mongoose": "^8.19.3",
+    "mongoose-sequence": "^6.0.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.10"

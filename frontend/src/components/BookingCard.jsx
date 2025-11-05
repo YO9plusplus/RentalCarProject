@@ -16,7 +16,7 @@ function BookingCard({ booking, onDelete }) {
             Date: {new Date(booking.date).toLocaleDateString()}
           </p>
           <p className="mt-2 text-sm text-gray-500">
-            Booking ID: {booking._id}
+            Booking ID: {booking.bookingNumber}
           </p>
           {hasCarData && (
             <p className="text-sm text-gray-500">
