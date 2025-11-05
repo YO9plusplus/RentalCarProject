@@ -1,35 +1,36 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from 'react';
+// 1. Import all the routing tools
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+// 2. Import your pages
+import CarListPage from './pages/CarList';
+import LoginPage from './pages/Login';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    // 3. Wrap everything in <BrowserRouter>
+    <BrowserRouter>
+      {/* 4. <Routes> will switch between your pages */}
+      <Routes>
+        
+        {/* This is your default page (http://localhost:3000/)
+          We'll make it show the CarListPage.
+        */}
+        <Route path="/" element={<CarListPage />} />
+        
+        {/* This is the /carlist route
+          (http://localhost:3000/carlist)
+        */}
+        <Route path="/carlist" element={<CarListPage />} />
+
+        {/* This is the /login route
+          (http://localhost:3000/login)
+        */}
+        <Route path="/login" element={<LoginPage />} />
+
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
