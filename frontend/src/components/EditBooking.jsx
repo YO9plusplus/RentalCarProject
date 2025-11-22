@@ -46,7 +46,7 @@ const EditBooking = ({ isOpen, onClose, booking, onSuccess }) => {
         {/* 3. The 'X' close button */}
         <button 
           onClick={onClose}
-          className="absolute top-4 right-4 text-gray-400 hover:text-gray-900"
+          className="absolute cursor-pointer top-4 right-4 text-gray-400 hover:text-gray-900"
         >
           <i class="bi bi-x-lg"></i>
         </button>
@@ -79,7 +79,7 @@ const EditBooking = ({ isOpen, onClose, booking, onSuccess }) => {
               value={date}
               onChange={(e) => setDate(e.target.value)}
               required
-              className="mt-1 block w-full rounded-md border-0 py-2.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900"
+              className="mt-1 cursor-pointer block w-full rounded-md border-0 py-2.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900"
             />
           </div>
 
@@ -95,14 +95,14 @@ const EditBooking = ({ isOpen, onClose, booking, onSuccess }) => {
             <button
               type="button"
               onClick={onClose} // Use the onClose prop
-              className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md font-semibold hover:bg-gray-300"
+              className="px-4 py-2 cursor-pointer bg-gray-200 text-gray-700 rounded-md font-semibold hover:bg-gray-300"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="px-4 py-2 bg-gray-900 text-white rounded-md font-semibold hover:bg-gray-700 disabled:opacity-50"
+              className="px-4 py-2 cursor-pointer bg-gray-900 text-white rounded-md font-semibold hover:bg-gray-700 disabled:opacity-50"
             >
               {loading ? 'Saving...' : 'Save Changes'}
             </button>

@@ -28,14 +28,14 @@ function BookingCard({ booking, onDelete, onEdit }) {
           {/* Edit Button */}
           <button
             onClick={() => onEdit(booking)} // Passes the whole booking object
-            className="w-full px-4 py-2 bg-gray-600 text-white rounded-md font-semibold hover:bg-gray-500 transition-colors"
+            className="w-full cursor-pointer px-4 py-2 bg-gray-600 text-white rounded-md font-semibold hover:bg-gray-500 transition-colors"
           >
             Edit
           </button>
           {/* Delete Button */}
           <button
             onClick={() => onDelete(booking._id)}
-            className="w-full px-4 py-2 bg-black text-white rounded-md font-semibold hover:bg-gray-900 transition-colors"
+            className="w-full cursor-pointer px-4 py-2 bg-black text-white rounded-md font-semibold hover:bg-gray-200 hover:text-black transition-colors"
           >
             Cancel Booking
           </button>
