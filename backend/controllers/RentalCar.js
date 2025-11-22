@@ -1,5 +1,6 @@
 // Make sure you are importing your Car model
 const Car = require('../models/Car');
+const Providers = require('../models/Providers');
 
 exports.getAllRentalCars = async (req, res, next) => {
   try {
@@ -16,7 +17,7 @@ exports.getAllRentalCars = async (req, res, next) => {
   }
 };
 
-exports.craeteRentalCar = async(req,res,next)=>{
+exports.createRentalCar = async(req,res,next)=>{
     try {
         const newCar = await Car.create(req.body);
 
@@ -43,18 +44,82 @@ exports.craeteRentalCar = async(req,res,next)=>{
         }
     }
 }
-// FIX 2: Correct parameter order (req, res, next)
-exports.deleteRentalCar = (req, res, next) => {
-  res.status(200).json({
-    success: true,
-    msg: 'Delete rental car',
-  });
+exports.deleteRentalCar = async (req, res, next) => {
+  try{
+    const car = await Car.findById(req.params.id)
+
+    if(!car){
+      return res.status(400).json({
+        success:false,
+        msg:'Cannot delete this car'
+      })
+    }
+    if (car.user.toString() !== req.user.id && req.user.role !== 'ADMIN') {
+            return res.status(401).json({ 
+                success: false, 
+                msg: `User ${req.user.id} is not authorized to update this car`
+            });
+        }
+    await Car.deleteOne({_id:req.param.id})
+    await Booking.deleteMany({car:req.params.id})
+    res.status(200).json({
+      success: true,
+      msg: 'Delete rental car',
+    });
+  }
+  catch(error){
+    res.status(500)
+  }
 };
 
-// FIX 3: Correct parameter order (req, res, next)
-exports.updateRentalCar = (req, res, next) => {
-  res.status(200).json({
-    success: true,
-    msg: 'Edit rental car',
-  });
+exports.updateRentalCar = async (req, res, next) => {
+  try{
+    const car = await Car.findById(req.params.id)
+
+    if (!car) {
+      return res.status(404).json({
+        success:false,
+        msg:`There is no car with ${req.params.id} to be updated`
+      })
+    }
+    if (car.user.toString() !== req.user.id && req.user.role !== 'ADMIN') {
+            return res.status(401).json({ 
+                success: false, 
+                msg: `User ${req.user.id} is not authorized to update this car`
+            });
+        }
+    
+    await Car.updateOne(req.params.id,req.body,{
+      new:true,
+      runValidators:true
+    })
+    res.status(200).json({
+      success: true,
+      msg: 'Edit rental car',
+    });
+  }
+  catch(error){
+    res.status(500).json({
+      success:false,
+      msg:'Cannot update rental car'
+    })
+  }
 };
+
+exports.getRentalCar = async (req,res,next)=>{
+  try{
+    const car = await Car.findById(req.params.id);
+
+    res.status(200).json({
+      success:true,
+      data:car
+    })
+  }
+  catch(error){
+    res.status(500).json({
+      sucess:false,
+      msg: 'There is no car with this id'
+    })
+  }
+
+}
